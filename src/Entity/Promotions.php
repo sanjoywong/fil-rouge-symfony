@@ -18,18 +18,17 @@ class Promotions
     #[ORM\Column(length: 255)]
     private ?string $nom_promotion = null;
 
-    #[ORM\ManyToOne(inversedBy: 'promotions')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Etablissements $id_etablissement = null;
-
     #[ORM\Column(nullable: true)]
     private ?int $annee = null;
 
-    #[ORM\OneToMany(mappedBy: 'id_promotion', targetEntity: Eleves::class)]
+    #[ORM\OneToMany(mappedBy: 'promotion', targetEntity: Eleves::class)]
     private Collection $eleves;
 
-    #[ORM\OneToMany(mappedBy: 'id_promotion', targetEntity: Cours::class)]
+    #[ORM\OneToMany(mappedBy: 'promotion', targetEntity: Cours::class)]
     private Collection $cours;
+
+    #[ORM\ManyToOne(inversedBy: 'promotions')]
+    private ?Etablissements $etablissement = null;
 
     public function __construct()
     {
@@ -54,17 +53,6 @@ class Promotions
         return $this;
     }
 
-    public function getIdEtablissement(): ?Etablissements
-    {
-        return $this->id_etablissement;
-    }
-
-    public function setIdEtablissement(?Etablissements $id_etablissement): self
-    {
-        $this->id_etablissement = $id_etablissement;
-
-        return $this;
-    }
 
     public function getAnnee(): ?int
     {
@@ -90,7 +78,7 @@ class Promotions
     {
         if (!$this->eleves->contains($elefe)) {
             $this->eleves->add($elefe);
-            $elefe->setIdPromotion($this);
+            $elefe->setPromotion($this);
         }
 
         return $this;
@@ -100,8 +88,8 @@ class Promotions
     {
         if ($this->eleves->removeElement($elefe)) {
             // set the owning side to null (unless already changed)
-            if ($elefe->getIdPromotion() === $this) {
-                $elefe->setIdPromotion(null);
+            if ($elefe->getPromotion() === $this) {
+                $elefe->setPromotion(null);
             }
         }
 
@@ -120,7 +108,7 @@ class Promotions
     {
         if (!$this->cours->contains($cour)) {
             $this->cours->add($cour);
-            $cour->setIdPromotion($this);
+            $cour->setPromotion($this);
         }
 
         return $this;
@@ -130,10 +118,22 @@ class Promotions
     {
         if ($this->cours->removeElement($cour)) {
             // set the owning side to null (unless already changed)
-            if ($cour->getIdPromotion() === $this) {
-                $cour->setIdPromotion(null);
+            if ($cour->getPromotion() === $this) {
+                $cour->setPromotion(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getEtablissement(): ?Etablissements
+    {
+        return $this->etablissement;
+    }
+
+    public function setEtablissement(?Etablissements $etablissement): self
+    {
+        $this->etablissement = $etablissement;
 
         return $this;
     }

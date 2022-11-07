@@ -17,7 +17,7 @@ class Salles
 
     #[ORM\ManyToOne(inversedBy: 'salles')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Etablissements $id_etablissement = null;
+    private ?Etablissements $etablissement = null;
 
     #[ORM\Column(length: 255)]
     private ?string $nom_salle = null;
@@ -25,7 +25,7 @@ class Salles
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $caracteristique = null;
 
-    #[ORM\OneToMany(mappedBy: 'id_salle', targetEntity: Cours::class)]
+    #[ORM\OneToMany(mappedBy: 'salle', targetEntity: Cours::class)]
     private Collection $cours;
 
     public function __construct()
@@ -38,14 +38,14 @@ class Salles
         return $this->id;
     }
 
-    public function getIdEtablissement(): ?Etablissements
+    public function getEtablissement(): ?Etablissements
     {
-        return $this->id_etablissement;
+        return $this->etablissement;
     }
 
-    public function setIdEtablissement(?Etablissements $id_etablissement): self
+    public function setEtablissement(?Etablissements $etablissement): self
     {
-        $this->id_etablissement = $id_etablissement;
+        $this->etablissement = $etablissement;
 
         return $this;
     }
@@ -86,7 +86,7 @@ class Salles
     {
         if (!$this->cours->contains($cour)) {
             $this->cours->add($cour);
-            $cour->setIdSalle($this);
+            $cour->setSalle($this);
         }
 
         return $this;
@@ -96,8 +96,8 @@ class Salles
     {
         if ($this->cours->removeElement($cour)) {
             // set the owning side to null (unless already changed)
-            if ($cour->getIdSalle() === $this) {
-                $cour->setIdSalle(null);
+            if ($cour->getSalle() === $this) {
+                $cour->setSalle(null);
             }
         }
 

@@ -38,9 +38,9 @@ class Enseignants
     private ?string $telephone = null;
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    private ?Comptes $id_compte = null;
+    private ?Comptes $compte = null;
 
-    #[ORM\OneToMany(mappedBy: 'id_enseigant', targetEntity: Cours::class)]
+    #[ORM\OneToMany(mappedBy: 'enseigant', targetEntity: Cours::class)]
     private Collection $cours;
 
     #[ORM\ManyToMany(targetEntity: Matieres::class, mappedBy: 'enseignant')]
@@ -141,14 +141,14 @@ class Enseignants
         return $this;
     }
 
-    public function getIdCompte(): ?Comptes
+    public function getCompte(): ?Comptes
     {
-        return $this->id_compte;
+        return $this->compte;
     }
 
-    public function setIdCompte(?Comptes $id_compte): self
+    public function setCompte(?Comptes $compte): self
     {
-        $this->id_compte = $id_compte;
+        $this->compte = $compte;
 
         return $this;
     }
@@ -165,7 +165,7 @@ class Enseignants
     {
         if (!$this->cours->contains($cour)) {
             $this->cours->add($cour);
-            $cour->setIdEnseigant($this);
+            $cour->setEnseigant($this);
         }
 
         return $this;
@@ -175,8 +175,8 @@ class Enseignants
     {
         if ($this->cours->removeElement($cour)) {
             // set the owning side to null (unless already changed)
-            if ($cour->getIdEnseigant() === $this) {
-                $cour->setIdEnseigant(null);
+            if ($cour->getEnseigant() === $this) {
+                $cour->setEnseigant(null);
             }
         }
 

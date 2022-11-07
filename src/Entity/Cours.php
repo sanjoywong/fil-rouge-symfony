@@ -17,10 +17,10 @@ class Cours
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'cours')]
-    private ?Salles $id_salle = null;
+    private ?Salles $salle = null;
 
     #[ORM\ManyToOne(inversedBy: 'cours')]
-    private ?Promotions $id_promotion = null;
+    private ?Promotions $promotion = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $date = null;
@@ -32,17 +32,17 @@ class Cours
     private ?\DateTimeInterface $heure_fin = null;
 
     #[ORM\ManyToOne(inversedBy: 'cours')]
-    private ?Enseignants $id_enseigant = null;
+    private ?Enseignants $enseigant = null;
 
     #[ORM\ManyToMany(targetEntity: Eleves::class, inversedBy: 'cours')]
-    private Collection $id_eleve;
+    private Collection $eleve;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $nom_matiere = null;
 
     public function __construct()
     {
-        $this->id_eleve = new ArrayCollection();
+        $this->eleve = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -50,26 +50,26 @@ class Cours
         return $this->id;
     }
 
-    public function getIdSalle(): ?Salles
+    public function getSalle(): ?Salles
     {
-        return $this->id_salle;
+        return $this->salle;
     }
 
-    public function setIdSalle(?Salles $id_salle): self
+    public function setSalle(?Salles $salle): self
     {
-        $this->id_salle = $id_salle;
+        $this->salle = $salle;
 
         return $this;
     }
 
-    public function getIdPromotion(): ?Promotions
+    public function getPromotion(): ?Promotions
     {
-        return $this->id_promotion;
+        return $this->promotion;
     }
 
-    public function setIdPromotion(?Promotions $id_promotion): self
+    public function setPromotion(?Promotions $promotion): self
     {
-        $this->id_promotion = $id_promotion;
+        $this->promotion = $promotion;
 
         return $this;
     }
@@ -110,14 +110,14 @@ class Cours
         return $this;
     }
 
-    public function getIdEnseigant(): ?Enseignants
+    public function getEnseigant(): ?Enseignants
     {
-        return $this->id_enseigant;
+        return $this->enseigant;
     }
 
-    public function setIdEnseigant(?Enseignants $id_enseigant): self
+    public function setEnseigant(?Enseignants $enseigant): self
     {
-        $this->id_enseigant = $id_enseigant;
+        $this->enseigant = $enseigant;
 
         return $this;
     }
@@ -127,21 +127,21 @@ class Cours
      */
     public function getIdEleve(): Collection
     {
-        return $this->id_eleve;
+        return $this->eleve;
     }
 
-    public function addIdEleve(Eleves $idEleve): self
+    public function addEleve(Eleves $idEleve): self
     {
-        if (!$this->id_eleve->contains($idEleve)) {
-            $this->id_eleve->add($idEleve);
+        if (!$this->eleve->contains($idEleve)) {
+            $this->eleve->add($idEleve);
         }
 
         return $this;
     }
 
-    public function removeIdEleve(Eleves $idEleve): self
+    public function removeEleve(Eleves $idEleve): self
     {
-        $this->id_eleve->removeElement($idEleve);
+        $this->eleve->removeElement($idEleve);
 
         return $this;
     }

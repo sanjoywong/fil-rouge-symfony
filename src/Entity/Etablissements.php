@@ -21,11 +21,11 @@ class Etablissements
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $ville = null;
 
-    #[ORM\OneToMany(mappedBy: 'id_etablissement', targetEntity: Promotions::class, orphanRemoval: true)]
-    private Collection $promotions;
-
-    #[ORM\OneToMany(mappedBy: 'id_etablissement', targetEntity: Salles::class)]
+    #[ORM\OneToMany(mappedBy: 'etablissement', targetEntity: Salles::class)]
     private Collection $salles;
+
+    #[ORM\OneToMany(mappedBy: 'etablissement', targetEntity: Promotions::class)]
+    private Collection $promotions;
 
     public function __construct()
     {
@@ -63,36 +63,6 @@ class Etablissements
     }
 
     /**
-     * @return Collection<int, Promotions>
-     */
-    public function getPromotions(): Collection
-    {
-        return $this->promotions;
-    }
-
-    public function addPromotion(Promotions $promotion): self
-    {
-        if (!$this->promotions->contains($promotion)) {
-            $this->promotions->add($promotion);
-            $promotion->setIdEtablissement($this);
-        }
-
-        return $this;
-    }
-
-    public function removePromotion(Promotions $promotion): self
-    {
-        if ($this->promotions->removeElement($promotion)) {
-            // set the owning side to null (unless already changed)
-            if ($promotion->getIdEtablissement() === $this) {
-                $promotion->setIdEtablissement(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
      * @return Collection<int, Salles>
      */
     public function getSalles(): Collection
@@ -104,7 +74,7 @@ class Etablissements
     {
         if (!$this->salles->contains($salle)) {
             $this->salles->add($salle);
-            $salle->setIdEtablissement($this);
+            $salle->setEtablissement($this);
         }
 
         return $this;
@@ -114,8 +84,38 @@ class Etablissements
     {
         if ($this->salles->removeElement($salle)) {
             // set the owning side to null (unless already changed)
-            if ($salle->getIdEtablissement() === $this) {
-                $salle->setIdEtablissement(null);
+            if ($salle->getEtablissement() === $this) {
+                $salle->setEtablissement(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Promotions>
+     */
+    public function getPromotions(): Collection
+    {
+        return $this->promotions;
+    }
+
+    public function addPromotion(Promotions $promotion): self
+    {
+        if (!$this->promotions->contains($promotion)) {
+            $this->promotions->add($promotion);
+            $promotion->setEtablissement($this);
+        }
+
+        return $this;
+    }
+
+    public function removePromotion(Promotions $promotion): self
+    {
+        if ($this->promotions->removeElement($promotion)) {
+            // set the owning side to null (unless already changed)
+            if ($promotion->getEtablissement() === $this) {
+                $promotion->setEtablissement(null);
             }
         }
 

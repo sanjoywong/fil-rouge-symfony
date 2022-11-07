@@ -17,7 +17,7 @@ class Eleves
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'eleves')]
-    private ?Promotions $id_promotion = null;
+    private ?Promotions $promotion = null;
 
     #[ORM\Column(length: 255)]
     private ?string $identifiant = null;
@@ -42,9 +42,9 @@ class Eleves
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Comptes $id_compte = null;
+    private ?Comptes $compte = null;
 
-    #[ORM\ManyToMany(targetEntity: Cours::class, mappedBy: 'id_eleve')]
+    #[ORM\ManyToMany(targetEntity: Cours::class, mappedBy: 'eleve')]
     private Collection $cours;
 
     public function __construct()
@@ -57,14 +57,14 @@ class Eleves
         return $this->id;
     }
 
-    public function getIdPromotion(): ?Promotions
+    public function getPromotion(): ?Promotions
     {
-        return $this->id_promotion;
+        return $this->promotion;
     }
 
-    public function setIdPromotion(?Promotions $id_promotion): self
+    public function setPromotion(?Promotions $promotion): self
     {
-        $this->id_promotion = $id_promotion;
+        $this->promotion = $promotion;
 
         return $this;
     }
@@ -153,14 +153,14 @@ class Eleves
         return $this;
     }
 
-    public function getIdCompte(): ?Comptes
+    public function getCompte(): ?Comptes
     {
-        return $this->id_compte;
+        return $this->compte;
     }
 
-    public function setIdCompte(Comptes $id_compte): self
+    public function setCompte(Comptes $compte): self
     {
-        $this->id_compte = $id_compte;
+        $this->compte = $compte;
 
         return $this;
     }
@@ -177,7 +177,7 @@ class Eleves
     {
         if (!$this->cours->contains($cour)) {
             $this->cours->add($cour);
-            $cour->addIdEleve($this);
+            $cour->addEleve($this);
         }
 
         return $this;
@@ -186,7 +186,7 @@ class Eleves
     public function removeCour(Cours $cour): self
     {
         if ($this->cours->removeElement($cour)) {
-            $cour->removeIdEleve($this);
+            $cour->removeEleve($this);
         }
 
         return $this;
