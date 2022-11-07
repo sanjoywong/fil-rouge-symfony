@@ -18,12 +18,12 @@ class Matieres
     #[ORM\Column(length: 255)]
     private ?string $nom_matiere = null;
 
-    #[ORM\OneToMany(mappedBy: 'nom_matiere', targetEntity: Cours::class)]
-    private Collection $cours;
+    #[ORM\ManyToMany(targetEntity: Enseignants::class, inversedBy: 'matieres')]
+    private Collection $enseignant;
 
     public function __construct()
     {
-        $this->cours = new ArrayCollection();
+        $this->enseignant = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -44,32 +44,28 @@ class Matieres
     }
 
     /**
-     * @return Collection<int, Cours>
+     * @return Collection<int, Enseignants>
      */
-    public function getCours(): Collection
+    public function getEnseignant(): Collection
     {
-        return $this->cours;
+        return $this->enseignant;
     }
 
-    public function addCour(Cours $cour): self
+    public function addEnseignant(Enseignants $enseignant): self
     {
-        if (!$this->cours->contains($cour)) {
-            $this->cours->add($cour);
-            $cour->setNomMatiere($this);
+        if (!$this->enseignant->contains($enseignant)) {
+            $this->enseignant->add($enseignant);
         }
 
         return $this;
     }
 
-    public function removeCour(Cours $cour): self
+    public function removeEnseignant(Enseignants $enseignant): self
     {
-        if ($this->cours->removeElement($cour)) {
-            // set the owning side to null (unless already changed)
-            if ($cour->getNomMatiere() === $this) {
-                $cour->setNomMatiere(null);
-            }
-        }
+        $this->enseignant->removeElement($enseignant);
 
         return $this;
     }
+
+   
 }

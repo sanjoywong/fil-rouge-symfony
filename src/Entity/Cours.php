@@ -37,8 +37,8 @@ class Cours
     #[ORM\ManyToMany(targetEntity: Eleves::class, inversedBy: 'cours')]
     private Collection $id_eleve;
 
-    #[ORM\ManyToOne(inversedBy: 'cours')]
-    private ?Matieres $nom_matiere = null;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $nom_matiere = null;
 
     public function __construct()
     {
@@ -146,12 +146,12 @@ class Cours
         return $this;
     }
 
-    public function getNomMatiere(): ?Matieres
+    public function getNomMatiere(): ?string
     {
         return $this->nom_matiere;
     }
 
-    public function setNomMatiere(?Matieres $nom_matiere): self
+    public function setNomMatiere(?string $nom_matiere): self
     {
         $this->nom_matiere = $nom_matiere;
 

@@ -43,9 +43,13 @@ class Enseignants
     #[ORM\OneToMany(mappedBy: 'id_enseigant', targetEntity: Cours::class)]
     private Collection $cours;
 
+    #[ORM\ManyToMany(targetEntity: Matieres::class, mappedBy: 'enseignant')]
+    private Collection $matieres;
+
     public function __construct()
     {
         $this->cours = new ArrayCollection();
+        $this->matieres = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -174,6 +178,33 @@ class Enseignants
             if ($cour->getIdEnseigant() === $this) {
                 $cour->setIdEnseigant(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Matieres>
+     */
+    public function getMatieres(): Collection
+    {
+        return $this->matieres;
+    }
+
+    public function addMatiere(Matieres $matiere): self
+    {
+        if (!$this->matieres->contains($matiere)) {
+            $this->matieres->add($matiere);
+            $matiere->addEnseignant($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMatiere(Matieres $matiere): self
+    {
+        if ($this->matieres->removeElement($matiere)) {
+            $matiere->removeEnseignant($this);
         }
 
         return $this;
