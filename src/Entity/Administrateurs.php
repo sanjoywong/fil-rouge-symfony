@@ -24,7 +24,7 @@ class Administrateurs
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Comptes $id_compte = null;
+    private ?Comptes $compte = null;
 
     public function getId(): ?int
     {
@@ -67,14 +67,14 @@ class Administrateurs
         return $this;
     }
 
-    public function getIdCompte(): ?Comptes
+    public function getCompte(): ?Comptes
     {
-        return $this->id_compte;
+        return $this->compte;
     }
 
-    public function setIdCompte(Comptes $id_compte): self
+    public function setIdCompte(Comptes $compte): self
     {
-        $this->id_compte = $id_compte;
+        $this->compte = $compte;
 
         return $this;
     }
