@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Comptes{% endblock %}
+
+{% block body %}
+    <h1>Comptes</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ compte.id }}</td>
+            </tr>
+            <tr>
+                <th>Creation_compte</th>
+                <td>{{ compte.creationCompte ? compte.creationCompte|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ compte.email }}</td>
+            </tr>
+            <tr>
+                <th>Envoi_email</th>
+                <td>{{ compte.envoiEmail ? compte.envoiEmail|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Token</th>
+                <td>{{ compte.token }}</td>
+            </tr>
+            <tr>
+                <th>Email_verification</th>
+                <td>{{ compte.emailVerification ? 'Yes' : 'No' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_comptes_index') }}">back to list</a>
+
+    <a href="{{ path('app_comptes_edit', {'id': compte.id}) }}">edit</a>
+
+    {{ include('comptes/_delete_form.html.twig') }}
+{% endblock %}

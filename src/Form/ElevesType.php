@@ -19,8 +19,8 @@ class ElevesType extends AbstractType
             ->add('email')
             ->add('date_naissance')
             ->add('telephone')
-            ->add('id_promotion')
-            ->add('id_compte')
+            ->add('promotion')
+            ->add('compte')
             ->add('cours')
         ;
     }

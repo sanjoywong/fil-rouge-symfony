@@ -16,7 +16,6 @@ class EnseignantsController extends AbstractController
     #[Route('/', name: 'app_enseignants_index', methods: ['GET'])]
     public function index(EnseignantsRepository $enseignantsRepository): Response
     {
-       /*  var_dump('Hello enseignants !'); */
         return $this->render('enseignants/index.html.twig', [
             'enseignants' => $enseignantsRepository->findAll(),
         ]);

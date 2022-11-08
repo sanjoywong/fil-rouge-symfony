@@ -72,7 +72,7 @@ class Administrateurs
         return $this->compte;
     }
 
-    public function setIdCompte(Comptes $compte): self
+    public function setCompte(Comptes $compte): self
     {
         $this->compte = $compte;
 

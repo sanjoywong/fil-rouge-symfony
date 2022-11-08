@@ -2,32 +2,26 @@
 
 namespace App\Form;
 
-use App\Entity\Enseignants;
+use App\Entity\Promotions;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class EnseignantsType extends AbstractType
+class PromotionsType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('identifiant')
-            ->add('password')
-            ->add('nom')
-            ->add('prenom')
-            ->add('email')
-            ->add('date_naissance')
-            ->add('telephone')
-            ->add('compte')
-            ->add('matieres')
+            ->add('nom_promotion')
+            ->add('annee')
+            ->add('etablissement')
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Enseignants::class,
+            'data_class' => Promotions::class,
         ]);
     }
 }

@@ -93,4 +93,9 @@ class Comptes
 
         return $this;
     }
+
+    public function __toString()
+    {
+        return $this->email;
+    }
 }

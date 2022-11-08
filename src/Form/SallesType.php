@@ -14,7 +14,7 @@ class SallesType extends AbstractType
         $builder
             ->add('nom_salle')
             ->add('caracteristique')
-            ->add('id_etablissement')
+            ->add('etablissement')
         ;
     }
 
