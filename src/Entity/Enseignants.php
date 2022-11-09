@@ -16,29 +16,8 @@ class Enseignants
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $identifiant = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $password = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $nom = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $prenom = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $email = null;
-
-    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $date_naissance = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $telephone = null;
-
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    private ?Comptes $compte = null;
+    private ?User $user = null;
 
     #[ORM\OneToMany(mappedBy: 'enseigant', targetEntity: Cours::class)]
     private Collection $cours;
@@ -57,98 +36,14 @@ class Enseignants
         return $this->id;
     }
 
-    public function getIdentifiant(): ?string
+    public function getUser(): ?User
     {
-        return $this->identifiant;
+        return $this->user;
     }
 
-    public function setIdentifiant(string $identifiant): self
+    public function setUser(?User $user): self
     {
-        $this->identifiant = $identifiant;
-
-        return $this;
-    }
-
-    public function getPassword(): ?string
-    {
-        return $this->password;
-    }
-
-    public function setPassword(string $password): self
-    {
-        $this->password = $password;
-
-        return $this;
-    }
-
-    public function getNom(): ?string
-    {
-        return $this->nom;
-    }
-
-    public function setNom(string $nom): self
-    {
-        $this->nom = $nom;
-
-        return $this;
-    }
-
-    public function getPrenom(): ?string
-    {
-        return $this->prenom;
-    }
-
-    public function setPrenom(string $prenom): self
-    {
-        $this->prenom = $prenom;
-
-        return $this;
-    }
-
-    public function getEmail(): ?string
-    {
-        return $this->email;
-    }
-
-    public function setEmail(string $email): self
-    {
-        $this->email = $email;
-
-        return $this;
-    }
-
-    public function getDateNaissance(): ?\DateTimeInterface
-    {
-        return $this->date_naissance;
-    }
-
-    public function setDateNaissance(?\DateTimeInterface $date_naissance): self
-    {
-        $this->date_naissance = $date_naissance;
-
-        return $this;
-    }
-
-    public function getTelephone(): ?string
-    {
-        return $this->telephone;
-    }
-
-    public function setTelephone(?string $telephone): self
-    {
-        $this->telephone = $telephone;
-
-        return $this;
-    }
-
-    public function getCompte(): ?Comptes
-    {
-        return $this->compte;
-    }
-
-    public function setCompte(?Comptes $compte): self
-    {
-        $this->compte = $compte;
+        $this->user = $user;
 
         return $this;
     }
