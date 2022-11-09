@@ -157,4 +157,12 @@ class Cours
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, Eleves>
+     */
+    public function getEleve(): Collection
+    {
+        return $this->eleve;
+    }
 }

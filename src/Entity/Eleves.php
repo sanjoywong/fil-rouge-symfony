@@ -74,4 +74,16 @@ class Eleves
 
         return $this;
     }
+
+    public function getPromotion(): ?Promotions
+    {
+        return $this->promotion;
+    }
+
+    public function setPromotion(?Promotions $promotion): self
+    {
+        $this->promotion = $promotion;
+
+        return $this;
+    }
 }
